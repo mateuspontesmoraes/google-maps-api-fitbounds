@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FitBounds</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+	<input type="button" value="Adicionar Marcador" onclick="addMarker()" style="position:absolute;top:10px;right:10px;z-index:1000" />
+    <div id="map"></div>
+    <script>
+
+	var map;
+	var idx = 0;
+	var bounds;
+	function initMap() {
+	  map = new google.maps.Map(document.getElementById('map'), {
+		center: {lat: -13.826417904480488, lng: -49.58183007812499},
+		zoom: 15
+	  });
+	  
+	  bounds = new google.maps.LatLngBounds();
+	}
+	
+	function addMarker(){
+		var cliente = clientes[idx];
+		
+		var pos = new google.maps.LatLng(cliente.lat, cliente.lng);
+		 var marker = new google.maps.Marker({
+			position: pos,
+			map: map
+		 });
+		 
+		 bounds.extend(pos);
+		 map.fitBounds(bounds);
+		 idx++;
+	}
+
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJa4PHd0Dr_m8Gw80uY5kriQwurBKTLR8&callback=initMap"
+        async defer></script>
+	<script   src="https://code.jquery.com/jquery-1.12.3.min.js"   integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ="crossorigin="anonymous"></script>
+	<script src="js/clientes.js"></script>
+  </body>
+</html>
